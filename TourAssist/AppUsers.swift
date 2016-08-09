@@ -8,10 +8,11 @@
 
 import UIKit
 
-class TourGuides
+class AppUsers
 {
     //var id:Int
     
+    var key:String
     var lastname:String
     var firstname:String
     var email:String
@@ -19,10 +20,10 @@ class TourGuides
     var nationality:String
     var phone:String
     var language:String
-    //var pw:String
+    var sex:String
     var imageStr:String
     
-    init(lastname:String,firstname:String,email:String,nationality:String,phone:String,imageStr:String, language:String)
+    init(key:String,lastname:String,firstname:String,email:String,nationality:String,phone:String,imageStr:String, language:String, sex:String)
     {
         //self.id = id
         
@@ -33,8 +34,9 @@ class TourGuides
         self.nationality = nationality
         self.phone = phone
         self.language = language
-        //self.pw = pw
+        self.sex = sex
         self.imageStr = imageStr
+        self.key = key
         
         
     }
@@ -45,6 +47,31 @@ class TourGuides
     //    }
     
 }
+
+
+
+class LoginUser
+{
+    //var emailID:String
+    var keyID:String
+//    
+//    func getValue() -> String
+//    {
+//        return emailID
+//    }
+    
+    init(key:String)
+    {
+        //self.emailID = email
+        self.keyID = key
+    }
+    
+    
+    
+}
+
+var LoginInstance = LoginUser(key:"")
+
 
 
 //class Picture {

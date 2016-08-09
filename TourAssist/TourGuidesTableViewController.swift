@@ -13,7 +13,7 @@ import FirebaseDatabaseUI
 class TourGuidesTableViewController: UITableViewController {
     
     // datasource
-    var tourguides = [TourGuides]()
+    var tourguides = [AppUsers]()
     
     var ref: FIRDatabaseReference!
     
@@ -39,7 +39,7 @@ class TourGuidesTableViewController: UITableViewController {
         //LoadingOverlay.shared.hideOverlayView()
     }
     
-    func findGuides() -> [TourGuides]
+    func findGuides() -> [AppUsers]
     {
     
 //            
@@ -67,20 +67,28 @@ class TourGuidesTableViewController: UITableViewController {
         
         //LoadingOverlay.shared.showOverlay(self.view)
         
-        let alert = UIAlertController(title: nil, message: "Loading...", preferredStyle: .Alert)
+//        let alert = UIAlertController(title: nil, message: "Loading...", preferredStyle: .Alert)
+//        
+//        alert.view.tintColor = UIColor.blackColor()
+//        let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRectMake(10, 5, 50, 50)) as UIActivityIndicatorView
+//        loadingIndicator.hidesWhenStopped = true
+//        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+//        loadingIndicator.startAnimating();
+//        
+//        alert.view.addSubview(loadingIndicator)
+//        presentViewController(alert, animated: true, completion: nil)
         
-        alert.view.tintColor = UIColor.blackColor()
-        let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRectMake(10, 5, 50, 50)) as UIActivityIndicatorView
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        loadingIndicator.startAnimating();
+        let spinnerActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true);
         
-        alert.view.addSubview(loadingIndicator)
-        presentViewController(alert, animated: true, completion: nil)
+        spinnerActivity.label.text = "Loading ...";
+        
+        //spinnerActivity.detailsLabel.text = "Please Wait!!";
+        
+        spinnerActivity.userInteractionEnabled = true;
         
 
         
-        ref.child("users").queryOrderedByChild("isTourist").queryEqualToValue(false).observeEventType(.ChildAdded, withBlock: { snapshot in
+        ref.child("users").queryOrderedByChild("available").queryEqualToValue(true).observeEventType(.ChildAdded, withBlock: { snapshot in
             //if let lastname = snapshot.value!["lastname"] as? String {
             //print(lastname)
             let LName = snapshot.value!["lastname"] as? String
@@ -90,12 +98,12 @@ class TourGuidesTableViewController: UITableViewController {
             let phone = snapshot.value!["phone"] as? String
             let nationality = snapshot.value!["nationality"] as? String
             let language = snapshot.value!["language"] as? String
-            
+            let sex = snapshot.value!["sex"] as? String
             let imgStr = snapshot.value!["image"] as? String
-            //let pw = snapshot.value!["pw"] as? String
+            let key = snapshot.value!["uid"] as? String
             
             
-            self.tourguides.append(TourGuides(lastname:LName!, firstname:FName!, email:emailAdd!,nationality:nationality!,phone:phone!,imageStr:imgStr!,language:language!))
+            self.tourguides.append(AppUsers(key:key!,lastname:LName!, firstname:FName!, email:emailAdd!,nationality:nationality!,phone:phone!,imageStr:imgStr!,language:language!,sex:sex!))
             //}
             
             self.TGTableView.reloadData()
@@ -144,7 +152,8 @@ class TourGuidesTableViewController: UITableViewController {
         
         if indexPath.row == tourguides.count - 1
         {
-            self.dismissViewControllerAnimated(false, completion: nil)
+            MBProgressHUD.hideAllHUDsForView(self.view, animated: true);
+            //self.dismissViewControllerAnimated(false, completion: nil)
         }
         
         return cell

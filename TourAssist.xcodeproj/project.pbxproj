@@ -8,11 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		1106B3E51D21CD8600867C30 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1106B3E41D21CD8600867C30 /* MapKit.framework */; };
-		1116D62E1D234EA500403492 /* TourGuides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1116D62D1D234EA500403492 /* TourGuides.swift */; };
+		1116D62E1D234EA500403492 /* AppUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1116D62D1D234EA500403492 /* AppUsers.swift */; };
 		1116D6321D24D6AE00403492 /* TourGuidesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1116D6311D24D6AE00403492 /* TourGuidesTableViewController.swift */; };
 		1116D63A1D25836E00403492 /* TourGuidesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1116D6391D25836E00403492 /* TourGuidesDetailViewController.swift */; };
 		1116D63C1D2C4F5C00403492 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1116D63B1D2C4F5C00403492 /* RegistrationViewController.swift */; };
 		1116D6931D35BCEA00403492 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1116D6921D35BCEA00403492 /* GoogleService-Info.plist */; };
+		115081BA1D5274E7003717FA /* AvailableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115081B91D5274E7003717FA /* AvailableViewController.swift */; };
+		115081BC1D53FA1C003717FA /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115081BB1D53FA1C003717FA /* UserLocation.swift */; };
+		115081BE1D540F3C003717FA /* GPSNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115081BD1D540F3C003717FA /* GPSNavigationViewController.swift */; };
+		115081C21D552FDD003717FA /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 115081C11D552FDD003717FA /* MBProgressHUD.m */; };
 		116D63221D0A1CE60039729A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116D63211D0A1CE60039729A /* AppDelegate.swift */; };
 		116D63241D0A1CE60039729A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116D63231D0A1CE60039729A /* LoginViewController.swift */; };
 		116D63271D0A1CE60039729A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 116D63251D0A1CE60039729A /* Main.storyboard */; };
@@ -20,18 +24,25 @@
 		116D632C1D0A1CE60039729A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 116D632A1D0A1CE60039729A /* LaunchScreen.storyboard */; };
 		11DB54391D46D9C6002835EB /* LanguageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DB54381D46D9C6002835EB /* LanguageTableViewController.swift */; };
 		11DB543D1D484B43002835EB /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DB543C1D484B43002835EB /* MapViewController.swift */; };
-		11DB543F1D4A9AFA002835EB /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DB543E1D4A9AF9002835EB /* LoadingOverlay.swift */; };
+		11DB54411D5180EC002835EB /* TouristTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DB54401D5180EC002835EB /* TouristTableViewController.swift */; };
+		11DB54431D51811B002835EB /* TouristDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DB54421D51811B002835EB /* TouristDetailViewController.swift */; };
 		5C6BB94216F02367761C7DDF /* Pods_TourAssist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFE7C244FC236417EB4CCAF1 /* Pods_TourAssist.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		09EA778B501DA527219FDA50 /* Pods-TourAssist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TourAssist.release.xcconfig"; path = "Pods/Target Support Files/Pods-TourAssist/Pods-TourAssist.release.xcconfig"; sourceTree = "<group>"; };
 		1106B3E41D21CD8600867C30 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		1116D62D1D234EA500403492 /* TourGuides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourGuides.swift; sourceTree = "<group>"; };
+		1116D62D1D234EA500403492 /* AppUsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUsers.swift; sourceTree = "<group>"; };
 		1116D6311D24D6AE00403492 /* TourGuidesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourGuidesTableViewController.swift; sourceTree = "<group>"; };
 		1116D6391D25836E00403492 /* TourGuidesDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourGuidesDetailViewController.swift; sourceTree = "<group>"; };
 		1116D63B1D2C4F5C00403492 /* RegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		1116D6921D35BCEA00403492 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		115081B91D5274E7003717FA /* AvailableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableViewController.swift; sourceTree = "<group>"; };
+		115081BB1D53FA1C003717FA /* UserLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
+		115081BD1D540F3C003717FA /* GPSNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPSNavigationViewController.swift; sourceTree = "<group>"; };
+		115081BF1D552FDA003717FA /* TourAssist-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TourAssist-Bridging-Header.h"; sourceTree = "<group>"; };
+		115081C01D552FDD003717FA /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		115081C11D552FDD003717FA /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		116D631E1D0A1CE60039729A /* TourAssist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TourAssist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		116D63211D0A1CE60039729A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		116D63231D0A1CE60039729A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -41,7 +52,8 @@
 		116D632D1D0A1CE60039729A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11DB54381D46D9C6002835EB /* LanguageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTableViewController.swift; sourceTree = "<group>"; };
 		11DB543C1D484B43002835EB /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		11DB543E1D4A9AF9002835EB /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
+		11DB54401D5180EC002835EB /* TouristTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouristTableViewController.swift; sourceTree = "<group>"; };
+		11DB54421D51811B002835EB /* TouristDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouristDetailViewController.swift; sourceTree = "<group>"; };
 		5E84434039C96A08A86D6D5A /* Pods-TourAssist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TourAssist.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TourAssist/Pods-TourAssist.debug.xcconfig"; sourceTree = "<group>"; };
 		BFE7C244FC236417EB4CCAF1 /* Pods_TourAssist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TourAssist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -88,13 +100,20 @@
 				116D632A1D0A1CE60039729A /* LaunchScreen.storyboard */,
 				1116D6921D35BCEA00403492 /* GoogleService-Info.plist */,
 				116D632D1D0A1CE60039729A /* Info.plist */,
-				1116D62D1D234EA500403492 /* TourGuides.swift */,
+				115081C01D552FDD003717FA /* MBProgressHUD.h */,
+				115081C11D552FDD003717FA /* MBProgressHUD.m */,
+				1116D62D1D234EA500403492 /* AppUsers.swift */,
 				1116D6311D24D6AE00403492 /* TourGuidesTableViewController.swift */,
 				1116D6391D25836E00403492 /* TourGuidesDetailViewController.swift */,
 				1116D63B1D2C4F5C00403492 /* RegistrationViewController.swift */,
 				11DB54381D46D9C6002835EB /* LanguageTableViewController.swift */,
 				11DB543C1D484B43002835EB /* MapViewController.swift */,
-				11DB543E1D4A9AF9002835EB /* LoadingOverlay.swift */,
+				11DB54401D5180EC002835EB /* TouristTableViewController.swift */,
+				11DB54421D51811B002835EB /* TouristDetailViewController.swift */,
+				115081B91D5274E7003717FA /* AvailableViewController.swift */,
+				115081BB1D53FA1C003717FA /* UserLocation.swift */,
+				115081BD1D540F3C003717FA /* GPSNavigationViewController.swift */,
+				115081BF1D552FDA003717FA /* TourAssist-Bridging-Header.h */,
 			);
 			path = TourAssist;
 			sourceTree = "<group>";
@@ -241,14 +260,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				1116D6321D24D6AE00403492 /* TourGuidesTableViewController.swift in Sources */,
-				1116D62E1D234EA500403492 /* TourGuides.swift in Sources */,
+				115081BA1D5274E7003717FA /* AvailableViewController.swift in Sources */,
+				1116D62E1D234EA500403492 /* AppUsers.swift in Sources */,
+				115081BE1D540F3C003717FA /* GPSNavigationViewController.swift in Sources */,
 				116D63241D0A1CE60039729A /* LoginViewController.swift in Sources */,
 				11DB543D1D484B43002835EB /* MapViewController.swift in Sources */,
+				11DB54431D51811B002835EB /* TouristDetailViewController.swift in Sources */,
+				11DB54411D5180EC002835EB /* TouristTableViewController.swift in Sources */,
 				1116D63C1D2C4F5C00403492 /* RegistrationViewController.swift in Sources */,
 				11DB54391D46D9C6002835EB /* LanguageTableViewController.swift in Sources */,
+				115081BC1D53FA1C003717FA /* UserLocation.swift in Sources */,
 				1116D63A1D25836E00403492 /* TourGuidesDetailViewController.swift in Sources */,
 				116D63221D0A1CE60039729A /* AppDelegate.swift in Sources */,
-				11DB543F1D4A9AFA002835EB /* LoadingOverlay.swift in Sources */,
+				115081C21D552FDD003717FA /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,6 +388,7 @@
 			baseConfigurationReference = 5E84434039C96A08A86D6D5A /* Pods-TourAssist.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = TourAssist/Info.plist;
@@ -371,6 +396,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jackyccc.TourAssist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TourAssist/TourAssist-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -379,6 +406,7 @@
 			baseConfigurationReference = 09EA778B501DA527219FDA50 /* Pods-TourAssist.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = TourAssist/Info.plist;
@@ -386,6 +414,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jackyccc.TourAssist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TourAssist/TourAssist-Bridging-Header.h";
 			};
 			name = Release;
 		};
