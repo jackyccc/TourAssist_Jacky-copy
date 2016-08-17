@@ -12,11 +12,17 @@ import CoreLocation
 import Firebase
 
 
+class CustomPointAnnotation:MKPointAnnotation{
+    var imageString:String!
+}
+
+
+
 class MapViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelegate {
     
     let locationManager = CLLocationManager()
     
-    var ref: FIRDatabaseReference!
+    var ref: FIRDatabaseReference! = FIRDatabase.database().reference()
 
     @IBOutlet weak var mapview: MKMapView!
     var myLocation:CLLocationCoordinate2D?
@@ -24,7 +30,7 @@ class MapViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ref = FIRDatabase.database().reference()
+        //ref = FIRDatabase.database().reference()
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
@@ -66,6 +72,15 @@ class MapViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDel
             guide.coordinate = CLLocationCoordinate2D(latitude: lat!, longitude: lon!)
             guide.title = FName! + " \(LName!)"
             guide.subtitle = sex
+            
+            
+            
+//            let guide = CustomPointAnnotation()
+//            guide.coordinate = CLLocationCoordinate2D(latitude: lat!, longitude: lon!)
+//            guide.title = FName! + " \(LName!)"
+//            guide.subtitle = sex
+//            guide.imageString = imgStr
+
             
             
             self.mapview.addAnnotation(guide)
@@ -174,40 +189,54 @@ class MapViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDel
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         
         centerMap(locValue)
+        
+        LoginInstance.longitude = locValue.longitude
+        LoginInstance.latitude = locValue.latitude
+
+        
         locationManager.stopUpdatingLocation();
     }
     
-//    static var enable:Bool = true
-//    @IBAction func getMyLocation(sender: UIButton) {
-//        
-//        if CLLocationManager.locationServicesEnabled() {
-//            if MapViewController.enable {
-//                locationManager.stopUpdatingHeading()
-//                sender.titleLabel?.text = "Enable"
-//            }else{
-//                locationManager.startUpdatingLocation()
-//                sender.titleLabel?.text = "Disable"
-//            }
-//            MapViewController.enable = !MapViewController.enable
-//        }
-//    }
-    
-//    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?{
-//        let identifier = "pin"
-//        var view : MKPinAnnotationView
-//        if let dequeueView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView{
-//            dequeueView.annotation = annotation
-//            view = dequeueView
-//        }else{
-//            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-//            view.canShowCallout = true
-//            view.calloutOffset = CGPoint(x: -5, y: 5)
-//            view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-//        }
-//        view.pinColor =  .Red
-//        return view
-//    }
+//    var base64string:NSString!
 //    
+//    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+//        if !(annotation is CustomPointAnnotation) {
+//            return nil
+//        }
+//        
+//        let reuseId = "test"
+//        
+//        var anView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId)
+//        if anView == nil {
+//            anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+//            anView!.canShowCallout = true
+//        }
+//        else {
+//            anView!.annotation = annotation
+//        }
+//        
+//        //Set annotation-specific properties **AFTER**
+//        //the view is dequeued or created...
+//        
+//        
+//        
+//        let cpa = annotation as! CustomPointAnnotation
+//        
+//        base64string = cpa.imageString
+//        
+//        let decodedData = NSData(base64EncodedString: base64string as String, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+//        
+//        //let decodedImage = UIImage(data:decodedData!)!
+//        
+//        
+//        anView!.image = UIImage(data:decodedData!)
+//        
+//        return anView
+//    }
+
+    
+    
+ 
     
 //    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
 //        if let annotation = annotation as? UserLocation {

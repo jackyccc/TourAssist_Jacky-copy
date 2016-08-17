@@ -22,8 +22,10 @@ class AppUsers
     var language:String
     var sex:String
     var imageStr:String
+    var longitude:Double
+    var latitude:Double
     
-    init(key:String,lastname:String,firstname:String,email:String,nationality:String,phone:String,imageStr:String, language:String, sex:String)
+    init(key:String,lastname:String,firstname:String,email:String,nationality:String,phone:String,imageStr:String, language:String, sex:String, longitude:Double, latitude:Double)
     {
         //self.id = id
         
@@ -36,6 +38,8 @@ class AppUsers
         self.language = language
         self.sex = sex
         self.imageStr = imageStr
+        self.longitude = longitude
+        self.latitude = latitude
         self.key = key
         
         
@@ -50,27 +54,33 @@ class AppUsers
 
 
 
+
+
 class LoginUser
 {
     //var emailID:String
     var keyID:String
+    var longitude:Double
+    var latitude:Double
 //    
 //    func getValue() -> String
 //    {
 //        return emailID
 //    }
     
-    init(key:String)
+    init(key:String, longitude:Double, latitude:Double)
     {
         //self.emailID = email
         self.keyID = key
+        self.longitude = longitude
+        self.latitude = latitude
     }
     
     
     
 }
 
-var LoginInstance = LoginUser(key:"")
+var LoginInstance = LoginUser(key:"", longitude: 0,latitude: 0)
 
 
 

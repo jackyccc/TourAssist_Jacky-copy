@@ -12,7 +12,7 @@ import PhotosUI
 import CoreData
 import Firebase
 
-class RegistrationViewController: UIViewController, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIPickerViewDelegate,UITextFieldDelegate {
+class RegistrationTableViewController: UITableViewController, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIPickerViewDelegate,UITextFieldDelegate {
     
     var ref: FIRDatabaseReference!
     
@@ -30,7 +30,11 @@ class RegistrationViewController: UIViewController, UIPickerViewDataSource, UIIm
     @IBOutlet weak var txtPW: UITextField!
     @IBOutlet weak var txtPW2: UITextField!
     
+
+    @IBOutlet var tableviewRegister: UITableView!
+    
     @IBOutlet weak var txtViewLanguage: UITextView!
+    
     let imagePicker = UIImagePickerController()
     
     var isRegistrationDone:Bool = false
@@ -42,10 +46,11 @@ class RegistrationViewController: UIViewController, UIPickerViewDataSource, UIIm
         
         let source = sender.sourceViewController as! LanguageTableViewController
         
-        selectedRows = source.LangTableView.indexPathsForSelectedRows!.map{$0.row}
-        
-        if selectedRows.count > 0
+        if (source.LangTableView.indexPathsForSelectedRows?.count > 0)
         {
+            selectedRows = source.LangTableView.indexPathsForSelectedRows!.map{$0.row}
+        
+
             
             var i = 0
             
@@ -65,115 +70,113 @@ class RegistrationViewController: UIViewController, UIPickerViewDataSource, UIIm
         }
         else
         {
-            txtViewLanguage.text = ""
+            txtViewLanguage.text = "None"
         }
         
     }
-    
-    
-    override func shouldPerformSegueWithIdentifier(identifier: String!, sender: AnyObject!) -> Bool {
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+
         
 
-        if sender.description.containsString("UIButton") == true && identifier == nil {
+        if identifier == "segueRegister" {
             
-        var isTourist:Bool
-        var sex:String
-        
-        var alert:UIAlertController
-        
-        if segmentUserType.selectedSegmentIndex == 0
-        {
-            isTourist = true
-        }
-        else
-        {
-            isTourist = false
-        }
-        
-        if segmentSex.selectedSegmentIndex == 0
-        {
-            sex = "Male"
-        }
-        else
-        {
-            sex = "Female"
-        }
-        
-        if self.imgPhoto.image == nil
-        {
+            var isTourist:Bool
+            var sex:String
             
-            alert = UIAlertController(title: "Alert", message:
-                "Please choose a photo first.", preferredStyle: UIAlertControllerStyle.Alert)
+            var alert:UIAlertController
             
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-            
-            self.presentViewController(alert, animated: false, completion: nil)
-            
-            return false
-        }
-            
-        else if self.txtLastname.text!.isEmpty || txtFirstname.text!.isEmpty || txtEmail.text!.isEmpty || txtPhone.text!.isEmpty || txtNationality.text!.isEmpty || txtPW.text!.isEmpty || txtPW2.text!.isEmpty || txtViewLanguage.text!.isEmpty
-        {
-            
-            alert = UIAlertController(title: "Alert", message:
-                "Please fill out all fields.", preferredStyle: UIAlertControllerStyle.Alert)
-            
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-            
-            self.presentViewController(alert, animated: false, completion: nil)
-            
-            return false
-        }
-            //                else if (txtEmail.text!.containsString("@") == false && txtEmail.text!.containsString(".") == false)
-            //        {
-            //            alert = UIAlertController(title: "Alert", message:
-            //                "Invalid email address.", preferredStyle: UIAlertControllerStyle.Alert)
-            //
-            //            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-            //
-            //            self.presentViewController(alert, animated: false, completion: nil)
-            //        }
-        else if txtPW.text! != txtPW2.text!
-        {
-            alert = UIAlertController(title: "Alert", message:
-                "Passwords do not match.", preferredStyle: UIAlertControllerStyle.Alert)
-            
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-            
-            self.presentViewController(alert, animated: false, completion: nil)
-            
-            return false
-        }
-        else
-        {
-            
-            self.saveUser(self.txtLastname.text!, firstname: txtFirstname.text!, email: txtEmail.text!, isTourist:isTourist, phone:txtPhone.text!,nationality:txtNationality.text!,language:txtViewLanguage.text!,sex:sex, pw:txtPW.text!)
-            
-            if isRegistrationDone == true
+            if segmentUserType.selectedSegmentIndex == 0
             {
-                return true
+                isTourist = true
             }
             else
             {
+                isTourist = false
+            }
+            
+            if segmentSex.selectedSegmentIndex == 0
+            {
+                sex = "Male"
+            }
+            else
+            {
+                sex = "Female"
+            }
+            
+            if self.imgPhoto.image == nil
+            {
+                
+                alert = UIAlertController(title: "Alert", message:
+                    "Please choose a photo first.", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                
+                self.presentViewController(alert, animated: false, completion: nil)
+                
                 return false
             }
-        }
+                
+            else if self.txtLastname.text!.isEmpty || txtFirstname.text!.isEmpty || txtEmail.text!.isEmpty || txtPhone.text!.isEmpty || txtNationality.text!.isEmpty || txtPW.text!.isEmpty || txtPW2.text!.isEmpty || txtViewLanguage.text!.isEmpty
+            {
+                
+                alert = UIAlertController(title: "Alert", message:
+                    "Please fill out all fields.", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                
+                self.presentViewController(alert, animated: false, completion: nil)
+                
+                return false
+            }
+                //                else if (txtEmail.text!.containsString("@") == false && txtEmail.text!.containsString(".") == false)
+                //        {
+                //            alert = UIAlertController(title: "Alert", message:
+                //                "Invalid email address.", preferredStyle: UIAlertControllerStyle.Alert)
+                //
+                //            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                //
+                //            self.presentViewController(alert, animated: false, completion: nil)
+                //        }
+            else if txtPW.text! != txtPW2.text!
+            {
+                alert = UIAlertController(title: "Alert", message:
+                    "Passwords do not match.", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                
+                self.presentViewController(alert, animated: false, completion: nil)
+                
+                return false
+            }
+            else
+            {
+                
+                self.saveUser(self.txtLastname.text!, firstname: txtFirstname.text!, email: txtEmail.text!, isTourist:isTourist, phone:txtPhone.text!,nationality:txtNationality.text!,language:txtViewLanguage.text!,sex:sex, pw:txtPW.text!)
+                
+                if isRegistrationDone == true
+                {
+                    return true
+                }
+                else
+                {
+                    return false
+                }
+            }
         }
         
         return true
         
     }
     
-    @IBAction func btnRegister_Click(sender: AnyObject) {
-        
-        
-    }
-
+    
      var pickOption = [" ","Canada", "China", "France", "Germany", "Italy", "Japan", "Korea", "Malaysia", "Singapore",  "Spain", "U.K.", "U.S.A."]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        self.tableviewRegister.allowsSelection = false
+        self.tableviewRegister.separatorStyle = UITableViewCellSeparatorStyle.None
         
         let picker: UIPickerView
         picker = UIPickerView(frame: CGRectMake(0, 200, view.frame.width, 200))
@@ -189,7 +192,7 @@ class RegistrationViewController: UIViewController, UIPickerViewDataSource, UIIm
         toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker")
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(RegistrationTableViewController.donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
 //        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker")
         
@@ -254,13 +257,11 @@ class RegistrationViewController: UIViewController, UIPickerViewDataSource, UIIm
     }
 
     
-
-    
-    @IBAction func btnPhotoClick(sender: AnyObject) {
+    @IBAction func btnPhoto_Click(sender: AnyObject) {
         
         if UIImagePickerController.isSourceTypeAvailable(.Camera)
         {
-        
+            
             let alertController = UIAlertController(title: "Pick Source", message: nil, preferredStyle: .ActionSheet)
             
             let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .Default) { (action) in
@@ -287,7 +288,7 @@ class RegistrationViewController: UIViewController, UIPickerViewDataSource, UIIm
             alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
             
             presentViewController(alertController, animated: true, completion: nil)
-        
+            
         }
         else
         {
@@ -298,6 +299,9 @@ class RegistrationViewController: UIViewController, UIPickerViewDataSource, UIIm
             presentViewController(self.imagePicker, animated: true, completion: nil)
         }
     }
+
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -317,37 +321,37 @@ class RegistrationViewController: UIViewController, UIPickerViewDataSource, UIIm
         
     }
     
-    var userObj = [NSManagedObject]()
-    
-    
-    func saveRec(lastname: String, firstname: String, email: String) {
-        //1
-        let appDelegate =
-            UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        let managedContext = appDelegate.managedObjectContext
-        
-        //2
-        let entity =  NSEntityDescription.entityForName("Test",
-                                                        inManagedObjectContext:managedContext)
-        
-        let users = NSManagedObject(entity: entity!,
-                                     insertIntoManagedObjectContext: managedContext)
-        
-        //3
-        users.setValue(lastname, forKey: "lastname")
-        users.setValue(lastname, forKey: "firstname")
-        users.setValue(lastname, forKey: "email")
-        
-        //4
-        do {
-            try managedContext.save()
-            //5
-            userObj.append(users)
-        } catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
-        }
-    }
+//    var userObj = [NSManagedObject]()
+//    
+//    
+//    func saveRec(lastname: String, firstname: String, email: String) {
+//        //1
+//        let appDelegate =
+//            UIApplication.sharedApplication().delegate as! AppDelegate
+//        
+//        let managedContext = appDelegate.managedObjectContext
+//        
+//        //2
+//        let entity =  NSEntityDescription.entityForName("Test",
+//                                                        inManagedObjectContext:managedContext)
+//        
+//        let users = NSManagedObject(entity: entity!,
+//                                     insertIntoManagedObjectContext: managedContext)
+//        
+//        //3
+//        users.setValue(lastname, forKey: "lastname")
+//        users.setValue(lastname, forKey: "firstname")
+//        users.setValue(lastname, forKey: "email")
+//        
+//        //4
+//        do {
+//            try managedContext.save()
+//            //5
+//            userObj.append(users)
+//        } catch let error as NSError  {
+//            print("Could not save \(error), \(error.userInfo)")
+//        }
+//    }
     
     
     var base64string:NSString!
@@ -360,10 +364,10 @@ class RegistrationViewController: UIViewController, UIPickerViewDataSource, UIIm
             //print("created")
             if error == nil
             {
-                var img:UIImage = self.imgPhoto.image!
+                let img:UIImage = self.imgPhoto.image!
                 
                 
-                var imgData:NSData = UIImagePNGRepresentation(img)!
+                let imgData:NSData = UIImagePNGRepresentation(img)!
                 
                 self.base64string = imgData.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
                 
@@ -399,29 +403,32 @@ class RegistrationViewController: UIViewController, UIPickerViewDataSource, UIIm
                 self.ref.updateChildValues(newuser)
                 
                 
-                
+                self.isRegistrationDone = true
                 
                 self.navigationController?.popViewControllerAnimated(true)
                 
-                var alert = UIAlertController(title: "Registration Completed", message:
+                
+                let alert = UIAlertController(title: "Registration Completed", message:
                     "Done.", preferredStyle: UIAlertControllerStyle.Alert)
                 
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                 
                 self.presentViewController(alert, animated: false, completion: nil)
                 
-                self.isRegistrationDone = true
+                
             }
 
             else
             {
                 if let errCode = FIRAuthErrorCode(rawValue: error!.code) {
                     
+                    self.isRegistrationDone = false
+                    
                     switch errCode {
                     case .ErrorCodeInvalidEmail:
                         self.navigationController?.popViewControllerAnimated(true)
                         
-                        var alert = UIAlertController(title: "Registration Failed", message:
+                        let alert = UIAlertController(title: "Registration Failed", message:
                             "Invalid email address.", preferredStyle: UIAlertControllerStyle.Alert)
                         
                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
@@ -433,7 +440,7 @@ class RegistrationViewController: UIViewController, UIPickerViewDataSource, UIIm
                     case .ErrorCodeEmailAlreadyInUse:
                         self.navigationController?.popViewControllerAnimated(true)
                         
-                        var alert = UIAlertController(title: "Registration Failed", message:
+                        let alert = UIAlertController(title: "Registration Failed", message:
                             "Account already exisited with email address entered.", preferredStyle: UIAlertControllerStyle.Alert)
                         
                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
@@ -444,7 +451,7 @@ class RegistrationViewController: UIViewController, UIPickerViewDataSource, UIIm
                     default:
                         self.navigationController?.popViewControllerAnimated(true)
                         
-                        var alert = UIAlertController(title: "Registration Failed", message:
+                        let alert = UIAlertController(title: "Registration Failed", message:
                             "Unknown error.", preferredStyle: UIAlertControllerStyle.Alert)
                         
                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
@@ -457,7 +464,7 @@ class RegistrationViewController: UIViewController, UIPickerViewDataSource, UIIm
                     
                 }
                 
-                self.isRegistrationDone = false
+                
                 
             }
             

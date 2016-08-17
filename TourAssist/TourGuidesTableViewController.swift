@@ -8,7 +8,8 @@
 
 import UIKit
 import Firebase
-import FirebaseDatabaseUI
+import CoreLocation
+//import FirebaseDatabaseUI
 
 class TourGuidesTableViewController: UITableViewController {
     
@@ -20,6 +21,15 @@ class TourGuidesTableViewController: UITableViewController {
     //let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     @IBOutlet var TGTableView: UITableView!
     
+    @IBAction func btnRefresh_Click(sender: AnyObject) {
+        
+        tourguides.removeAll()
+        
+        self.TGTableView.reloadData()
+        
+        tourguides = findGuides()
+        
+    }
 
     
     override func viewDidLoad() {
@@ -100,15 +110,17 @@ class TourGuidesTableViewController: UITableViewController {
             let language = snapshot.value!["language"] as? String
             let sex = snapshot.value!["sex"] as? String
             let imgStr = snapshot.value!["image"] as? String
+            let longitude = snapshot.value!["longitude"] as? Double
+            let latitude = snapshot.value!["latitude"] as? Double
             let key = snapshot.value!["uid"] as? String
             
             
-            self.tourguides.append(AppUsers(key:key!,lastname:LName!, firstname:FName!, email:emailAdd!,nationality:nationality!,phone:phone!,imageStr:imgStr!,language:language!,sex:sex!))
+            self.tourguides.append(AppUsers(key:key!,lastname:LName!, firstname:FName!, email:emailAdd!,nationality:nationality!,phone:phone!,imageStr:imgStr!,language:language!,sex:sex!, longitude:longitude!, latitude:latitude!))
             //}
             
             self.TGTableView.reloadData()
             
-            
+            spinnerActivity.hideAnimated(true)
             
         })
 
@@ -137,24 +149,32 @@ class TourGuidesTableViewController: UITableViewController {
         
         let tourguide = tourguides[indexPath.row]
         
+        let TGLocation:CLLocation = CLLocation(latitude: tourguide.latitude, longitude: tourguide.longitude)
+        let TRLocation:CLLocation = CLLocation(latitude: LoginInstance.latitude, longitude: LoginInstance.longitude)
+        let meters:CLLocationDistance = TRLocation.distanceFromLocation(TGLocation)
+        let miles =  String(format: "%.2f", meters/1609)
+
+        
         cell.textLabel?.text = tourguide.lastname + ", \(tourguide.firstname)"
-        cell.detailTextLabel?.text = "\(tourguide.nationality)"
+        //cell.detailTextLabel?.text = "\(tourguide.nationality)"
+        
+        cell.detailTextLabel?.text = "Distance: \(miles) miles away"
         
         
         base64string = tourguide.imageStr
         
-        var decodedData = NSData(base64EncodedString: base64string as String, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+        let decodedData = NSData(base64EncodedString: base64string as String, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
         
-        var decodedImage = UIImage(data:decodedData!)!
+        let decodedImage = UIImage(data:decodedData!)!
 
         
         cell.imageView?.image = decodedImage
         
-        if indexPath.row == tourguides.count - 1
-        {
-            MBProgressHUD.hideAllHUDsForView(self.view, animated: true);
-            //self.dismissViewControllerAnimated(false, completion: nil)
-        }
+//        if indexPath.row == tourguides.count - 1
+//        {
+//            //MBProgressHUD.hideAllHUDsForView(self.view, animated: true);
+//            //self.dismissViewControllerAnimated(false, completion: nil)
+//        }
         
         return cell
     }
@@ -171,7 +191,7 @@ class TourGuidesTableViewController: UITableViewController {
         
         {
             // Get the new view controller using segue.destinationViewController.
-            let controller = segue.destinationViewController as! TourGuidesDetailViewController
+            let controller = segue.destinationViewController as! TourGuideDetailTableViewController
             
             // Pass the selected object to the new view controller.
             let selectedTG = tourguides[tableView.indexPathForSelectedRow!.row]

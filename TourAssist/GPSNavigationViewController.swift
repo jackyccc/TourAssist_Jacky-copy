@@ -8,12 +8,19 @@
 
 import UIKit
 import MapKit
+import Firebase
 
 class GPSNavigationViewController: UIViewController,MKMapViewDelegate, CLLocationManagerDelegate {
 
     var locationManager = CLLocationManager()
     
+    var TRLongitude:Double!
+    var TRLatitude:Double!
+    var isFromDetailView:Bool!
+    
     @IBOutlet weak var mapView: MKMapView!
+    
+    var ref: FIRDatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +28,8 @@ class GPSNavigationViewController: UIViewController,MKMapViewDelegate, CLLocatio
         mapView.delegate = self
         
         locationManager.requestWhenInUseAuthorization()
+        
+        ref = FIRDatabase.database().reference()
         
         
         if CLLocationManager.locationServicesEnabled() {
@@ -37,6 +46,31 @@ class GPSNavigationViewController: UIViewController,MKMapViewDelegate, CLLocatio
         if let coor = mapView.userLocation.location?.coordinate{
             mapView.setCenterCoordinate(coor, animated: true)
         }
+        
+        
+  
+        
+        
+//        ref.child("users").queryOrderedByChild("uid").queryEqualToValue(LoginInstance.keyID).observeEventType(.ChildAdded, withBlock: { snapshot in
+//            //if let lastname = snapshot.value!["lastname"] as? String {
+//            //print(lastname)
+//            let LName = snapshot.value!["lastname"] as? String
+//            let FName = snapshot.value!["firstname"] as? String
+//            let emailAdd = snapshot.value!["email"] as? String
+//            //let isTourist = snapshot.value!["isTourist"] as? Bool
+//            let phone = snapshot.value!["phone"] as? String
+//            let nationality = snapshot.value!["nationality"] as? String
+//            let language = snapshot.value!["language"] as? String
+//            let sex = snapshot.value!["sex"] as? String
+//            let imgStr = snapshot.value!["image"] as? String
+//            let key = snapshot.value!["uid"] as? String
+//            
+//
+//            
+//            
+//            
+//        })
+//
 
         
         //let london = Capital(title: "London", coordinate: CLLocationCoordinate2D(latitude: 51.000000, longitude: -0.10000), info: "whatever info about london")
@@ -69,23 +103,23 @@ class GPSNavigationViewController: UIViewController,MKMapViewDelegate, CLLocatio
     }
 
     
-    func centerMap(center:CLLocationCoordinate2D){
-        //self.saveCurrentLocation(center)
-        
-        //let spanX = 0.007
-        //let spanY = 0.007
-        
-        //let newRegion = MKCoordinateRegion(center:center , span: MKCoordinateSpanMake(spanX, spanY))
-        let newRegion = MKCoordinateRegion(center:center , span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-        mapView.setRegion(newRegion, animated: true)
-    }
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        
-        centerMap(locValue)
-        locationManager.stopUpdatingLocation();
-    }
+//    func centerMap(center:CLLocationCoordinate2D){
+//        //self.saveCurrentLocation(center)
+//        
+//        //let spanX = 0.007
+//        //let spanY = 0.007
+//        
+//        //let newRegion = MKCoordinateRegion(center:center , span: MKCoordinateSpanMake(spanX, spanY))
+//        let newRegion = MKCoordinateRegion(center:center , span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+//        mapView.setRegion(newRegion, animated: true)
+//    }
+//    
+//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+//        
+//        centerMap(locValue)
+//        locationManager.stopUpdatingLocation();
+//    }
 
 
     override func didReceiveMemoryWarning() {
@@ -138,22 +172,38 @@ class GPSNavigationViewController: UIViewController,MKMapViewDelegate, CLLocatio
 //        
 //    }
     
+    
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         /// never goes in here, demo only
         
-        var lon = userLocation.coordinate.longitude + 0.1
-        var lat = userLocation.coordinate.latitude + 0.1
         
-        var placemark =  MKPlacemark(coordinate: CLLocationCoordinate2DMake(lat, lon), addressDictionary: nil)
         
-        var mapItem = MKMapItem(placemark: placemark)
         
-        var options = [
-            MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeTransit,
+        //var lon = userLocation.coordinate.longitude + 0.1
+        //var lat = userLocation.coordinate.latitude + 0.1
+        
+        //let lon = -73.764278584042628
+        //let lat = 40.897627940625505
+        
+        
+        let lon = TRLongitude
+        let lat = TRLatitude
+        
+        let placemark =  MKPlacemark(coordinate: CLLocationCoordinate2DMake(lat, lon), addressDictionary: nil)
+        
+        let mapItem = MKMapItem(placemark: placemark)
+        
+        let options = [
+            MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking,
             MKLaunchOptionsMapTypeKey:MKMapType.Standard.rawValue,
             MKLaunchOptionsShowsTrafficKey:0
         ]
-        mapItem.openInMapsWithLaunchOptions(options as! [String : AnyObject])
+        
+        if (isFromDetailView == true)
+        {
+            isFromDetailView = false
+            mapItem.openInMapsWithLaunchOptions(options as? [String : AnyObject])
+        }
         
         //        mapView.showsUserLocation = false
         

@@ -8,7 +8,8 @@
 
 import UIKit
 import Firebase
-import FirebaseDatabaseUI
+import CoreLocation
+//import FirebaseDatabaseUI
 
 class TouristTableViewController: UITableViewController {
 
@@ -19,6 +20,14 @@ class TouristTableViewController: UITableViewController {
     //let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     @IBOutlet var TRTableView: UITableView!
 
+    @IBAction func btnReload_Click(sender: AnyObject) {
+        
+        tourists.removeAll()
+        self.TRTableView.reloadData()
+        
+        tourists = findTourists()
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,13 +71,18 @@ class TouristTableViewController: UITableViewController {
             let language = snapshot.value!["language"] as? String
             let sex = snapshot.value!["sex"] as? String
             let imgStr = snapshot.value!["image"] as? String
+            let longitude = snapshot.value!["longitude"] as? Double
+            let latitude = snapshot.value!["latitude"] as? Double
             let key = snapshot.value!["uid"] as? String
             
             
-            self.tourists.append(AppUsers(key:key!,lastname:LName!, firstname:FName!, email:emailAdd!,nationality:nationality!,phone:phone!,imageStr:imgStr!,language:language!,sex:sex!))
+            self.tourists.append(AppUsers(key:key!,lastname:LName!, firstname:FName!, email:emailAdd!,nationality:nationality!,phone:phone!,imageStr:imgStr!,language:language!,sex:sex!,longitude:longitude!,latitude:latitude!))
             //}
             
+            
             self.TRTableView.reloadData()
+            
+            spinnerActivity.hideAnimated(true)
             
             
             
@@ -110,24 +124,39 @@ class TouristTableViewController: UITableViewController {
         
         let tourist = tourists[indexPath.row]
         
+        
+        let TRLocation:CLLocation = CLLocation(latitude: tourist.latitude, longitude: tourist.longitude)
+        let TGLocation:CLLocation = CLLocation(latitude: LoginInstance.latitude, longitude: LoginInstance.longitude)
+        let meters:CLLocationDistance = TRLocation.distanceFromLocation(TGLocation)
+        let miles =  String(format: "%.2f", meters/1609)
+        
         cell.textLabel?.text = tourist.lastname + ", \(tourist.firstname)"
-        cell.detailTextLabel?.text = "\(tourist.nationality)"
+
+
+        
+        cell.detailTextLabel?.text = "Distance: \(miles) miles away"
+        
+
+        
+        //cell.detailTextLabel?.text = "\(tourist.nationality)"
         
         
         base64string = tourist.imageStr
         
-        var decodedData = NSData(base64EncodedString: base64string as String, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+        let decodedData = NSData(base64EncodedString: base64string as String, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
         
-        var decodedImage = UIImage(data:decodedData!)!
+        let decodedImage = UIImage(data:decodedData!)!
         
         
         cell.imageView?.image = decodedImage
         
-        if indexPath.row == tourists.count - 1
-        {
-            MBProgressHUD.hideAllHUDsForView(self.view, animated: true);
-            //self.dismissViewControllerAnimated(false, completion: nil)
-        }
+//        if indexPath.row == tourists.count - 1
+//        {
+//            //MBProgressHUD.hideAllHUDsForView(self.view, animated: true);
+//            
+//            //spinnerActivity.hideAnimated(true)
+//            //self.dismissViewControllerAnimated(false, completion: nil)
+//        }
         
         return cell
     }
@@ -139,7 +168,7 @@ class TouristTableViewController: UITableViewController {
             
         {
             // Get the new view controller using segue.destinationViewController.
-            let controller = segue.destinationViewController as! TouristDetailViewController
+            let controller = segue.destinationViewController as! TouristDetailTableViewController
             
             // Pass the selected object to the new view controller.
             let selectedTR = tourists[tableView.indexPathForSelectedRow!.row]

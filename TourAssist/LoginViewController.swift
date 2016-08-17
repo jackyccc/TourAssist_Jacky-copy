@@ -102,9 +102,14 @@ class LoginViewController: UIViewController,CLLocationManagerDelegate {
     }
     
 
+    @IBAction func BacktoLogin(sender:UIStoryboardSegue)
+    {
+        
+    }
+
        
 
-    override func shouldPerformSegueWithIdentifier(identifier: String!, sender: AnyObject!) -> Bool {
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         
         
         
@@ -180,6 +185,7 @@ class LoginViewController: UIViewController,CLLocationManagerDelegate {
                             
                             
                             
+                            
                             //self.dismissViewControllerAnimated(true, completion: nil)
                             
                             
@@ -195,7 +201,9 @@ class LoginViewController: UIViewController,CLLocationManagerDelegate {
                                 self.performSegueWithIdentifier("segueTourguide", sender: nil)
                             }
 
-                            MBProgressHUD.hideAllHUDsForView(self.view, animated: true);
+                            spinnerActivity.hideAnimated(true)
+                            
+//                            MBProgressHUD.hideAllHUDsForView(self.view, animated: true);
                             
                             
                         })

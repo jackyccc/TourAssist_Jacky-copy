@@ -34,7 +34,7 @@ class AvailableViewController: UIViewController,CLLocationManagerDelegate {
             
             ref.child("users/\(LoginInstance.keyID)/latitude").setValue(latitude)
             
-            var alert = UIAlertController(title: "Availability", message:
+            let alert = UIAlertController(title: "Availability", message:
                 "You are now Available to serve.", preferredStyle: UIAlertControllerStyle.Alert)
             
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
@@ -48,7 +48,7 @@ class AvailableViewController: UIViewController,CLLocationManagerDelegate {
             //ref.child("users").child("-KNdgeBhrhhzhMZhoKbY").setValue(["available":false])
             ref.child("users/\(LoginInstance.keyID)/available").setValue(false)
             
-            var alert = UIAlertController(title: "Availability", message:
+            let alert = UIAlertController(title: "Availability", message:
                 "You are now Unavailable to serve.", preferredStyle: UIAlertControllerStyle.Alert)
             
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
