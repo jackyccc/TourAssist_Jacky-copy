@@ -166,9 +166,17 @@ class TourGuidesTableViewController: UITableViewController {
         let decodedData = NSData(base64EncodedString: base64string as String, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
         
         let decodedImage = UIImage(data:decodedData!)!
-
         
-        cell.imageView?.image = decodedImage
+//        
+//        let cellImg : UIImageView = UIImageView(frame: CGRectMake(5, 5, 40, 40))
+//        cellImg.image = decodedImage
+//        cell.addSubview(cellImg)
+        
+        cell.imageView?.image = imageWithImage(decodedImage, scaledToSize: CGSize(width: 40, height: 40)) //decodedImage
+        
+        
+        
+        //cell.imageView?.image = decodedImage
         
 //        if indexPath.row == tourguides.count - 1
 //        {
@@ -180,7 +188,24 @@ class TourGuidesTableViewController: UITableViewController {
     }
     
     
-   
+    
+    func imageWithImage(image:UIImage,scaledToSize newSize:CGSize)->UIImage{
+        
+        UIGraphicsBeginImageContext(newSize);
+        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
+        let newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        return newImage;
+    }
+    
+    
+    
+    
+    
+    
+
+
     
     // MARK: - Navigation
     

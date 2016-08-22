@@ -148,7 +148,11 @@ class TouristTableViewController: UITableViewController {
         let decodedImage = UIImage(data:decodedData!)!
         
         
-        cell.imageView?.image = decodedImage
+        
+        
+        cell.imageView?.image = imageWithImage(decodedImage, scaledToSize: CGSize(width: 40, height: 40)) //decodedImage
+        
+        //cell.imageView?.image = resizeImageWithAspect(decodedImage,scaledToMaxWidth: 40.0, maxHeight: 40.0);
         
 //        if indexPath.row == tourists.count - 1
 //        {
@@ -160,6 +164,22 @@ class TouristTableViewController: UITableViewController {
         
         return cell
     }
+    
+    
+    
+
+    
+    func imageWithImage(image:UIImage,scaledToSize newSize:CGSize)->UIImage{
+        
+        UIGraphicsBeginImageContext(newSize);
+        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
+        let newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        return newImage;
+    }
+    
+    
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

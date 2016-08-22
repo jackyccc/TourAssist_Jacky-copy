@@ -65,7 +65,7 @@ class MapViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDel
 //            let nationality = snapshot.value!["nationality"] as? String
 //            let language = snapshot.value!["language"] as? String
             let sex = snapshot.value!["sex"] as? String
-//            let imgStr = snapshot.value!["image"] as? String
+            //let imgStr = snapshot.value!["image"] as? String
 //            let key = snapshot.value!["uid"] as? String
             
             let guide = MKPointAnnotation()
@@ -74,7 +74,7 @@ class MapViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDel
             guide.subtitle = sex
             
             
-            
+//            
 //            let guide = CustomPointAnnotation()
 //            guide.coordinate = CLLocationCoordinate2D(latitude: lat!, longitude: lon!)
 //            guide.title = FName! + " \(LName!)"
@@ -226,8 +226,9 @@ class MapViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDel
 //        
 //        let decodedData = NSData(base64EncodedString: base64string as String, options:NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
 //        
-//        //let decodedImage = UIImage(data:decodedData!)!
+//        let decodedImage = UIImage(data:decodedData!)!
 //        
+//        anView!.image = imageWithImage(decodedImage, scaledToSize: CGSize(width: 20, height: 20))
 //        
 //        anView!.image = UIImage(data:decodedData!)
 //        
@@ -235,6 +236,16 @@ class MapViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDel
 //    }
 
     
+    
+    func imageWithImage(image:UIImage,scaledToSize newSize:CGSize)->UIImage{
+        
+        UIGraphicsBeginImageContext(newSize);
+        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
+        let newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        return newImage;
+    }
     
  
     
